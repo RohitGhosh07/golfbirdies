@@ -1,5 +1,6 @@
 // App.tsx
 import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import logo1 from "./assets/logo1.png";
 import bottom from "./assets/bottom.png";
 import bottom1 from "./assets/bottom1.png";
@@ -16,6 +17,7 @@ import bottom2 from "./assets/bottom2.png";
 type Score = { birdies: number; eagles: number };
 
 export default function App() {
+  const { eventId = "2025134", roundId = "1" } = useParams();
   const [scores, setScores] = useState<Score>({ birdies: 0, eagles: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +26,7 @@ export default function App() {
     (async () => {
       try {
         const res = await fetch(
-          "https://www.europeantour.com/api/sportdata/HoleByHole/Event/2025134/Round/1"
+          `https://www.europeantour.com/api/sportdata/HoleByHole/Event/${eventId}/Round/${roundId}`
         );
         const data = await res.json();
 
