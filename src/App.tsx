@@ -45,7 +45,8 @@ function App() {
 
   const birdieDigits = getDigitArray(scores.birdies);
   const eagleDigits = getDigitArray(scores.eagles);
-  const totalDigits = getDigitArray(scores.birdies + scores.eagles);
+  const totalDeployed = scores.birdies + (scores.eagles * 2);
+  const totalDigits = getDigitArray(totalDeployed);
 
   return (
     <div className="min-h-screen bg-[#5B68A4] flex items-center justify-center py-6 sm:py-12 px-4">
