@@ -49,7 +49,7 @@ function App() {
   const totalDigits = getDigitArray(totalDeployed);
 
   return (
-    <div className="min-h-screen bg-[#5B68A4] flex items-center justify-center py-6 sm:py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#6d40cd] to-[#28054f] flex items-center justify-center py-6 sm:py-12 px-4">
       <div className="max-w-4xl w-full">
         <div className="flex flex-relative justify-center mb-4 sm:mb-8">
           <svg className="w-20 h-16 sm:w-32 sm:h-24" viewBox="0 0 150 90" fill="none" xmlns="http://www.w3.org/2000/svg">
