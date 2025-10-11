@@ -1,4 +1,52 @@
+import { useState, useEffect } from 'react';
+
+interface Score {
+  birdies: number;
+  eagles: number;
+}
+
 function App() {
+  const [scores, setScores] = useState<Score>({ birdies: 0, eagles: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchScores = async () => {
+      try {
+        const response = await fetch('https://www.europeantour.com/api/sportdata/HoleByHole/Event/2025134/Round/1');
+        const data = await response.json();
+        
+        let birdieCount = 0;
+        let eagleCount = 0;
+
+        // Count birdies and eagles across all players and holes
+        data.Players.forEach((player: any) => {
+          player.Holes.forEach((hole: any) => {
+            if (hole.ScoreClass === 'bi') birdieCount++;
+            if (hole.ScoreClass === 'ea') eagleCount++;
+          });
+        });
+
+        setScores({ birdies: birdieCount, eagles: eagleCount });
+        setIsLoading(false);
+      } catch (err) {
+        setError('Failed to fetch scores');
+        setIsLoading(false);
+      }
+    };
+
+    fetchScores();
+  }, []);
+
+  // Function to split number into array of digits
+  const getDigitArray = (num: number): number[] => {
+    return num.toString().padStart(3, '0').split('').map(Number);
+  };
+
+  const birdieDigits = getDigitArray(scores.birdies);
+  const eagleDigits = getDigitArray(scores.eagles);
+  const totalDigits = getDigitArray(scores.birdies + scores.eagles);
+
   return (
     <div className="min-h-screen bg-[#5B68A4] flex items-center justify-center py-6 sm:py-12 px-4">
       <div className="max-w-4xl w-full">
@@ -30,47 +78,41 @@ function App() {
           <div className="grid grid-cols-3 gap-2 sm:gap-8 max-w-3xl mx-auto px-2">
             <div className="flex flex-col items-center">
               <div className="flex gap-1 sm:gap-2 mb-2 sm:mb-4">
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>1</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>2</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>3</span>
-                </div>
+                {birdieDigits.map((digit, index) => (
+                  <div key={`birdie-${index}`} className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
+                    <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>{digit}</span>
+                  </div>
+                ))}
               </div>
-              <span className="text-[#FF4466] text-sm sm:text-2xl font-black tracking-wider" style={{ fontFamily: 'Arial Black, sans-serif' }}>BIRDIES</span>
+              <span className="text-[#FF4466] text-sm sm:text-2xl font-black tracking-wider" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                {isLoading ? 'LOADING...' : error ? 'ERROR' : 'BIRDIES'}
+              </span>
             </div>
 
             <div className="flex flex-col items-center">
               <div className="flex gap-1 sm:gap-2 mb-2 sm:mb-4">
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>1</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>2</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>3</span>
-                </div>
+                {eagleDigits.map((digit, index) => (
+                  <div key={`eagle-${index}`} className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
+                    <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>{digit}</span>
+                  </div>
+                ))}
               </div>
-              <span className="text-[#44DD88] text-sm sm:text-2xl font-black tracking-wider" style={{ fontFamily: 'Arial Black, sans-serif' }}>EAGLES</span>
+              <span className="text-[#44DD88] text-sm sm:text-2xl font-black tracking-wider" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                {isLoading ? 'LOADING...' : error ? 'ERROR' : 'EAGLES'}
+              </span>
             </div>
 
             <div className="flex flex-col items-center">
               <div className="flex gap-1 sm:gap-2 mb-2 sm:mb-4">
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>1</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>2</span>
-                </div>
-                <div className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
-                  <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>3</span>
-                </div>
+                {totalDigits.map((digit, index) => (
+                  <div key={`total-${index}`} className="bg-white rounded-lg w-8 h-12 sm:w-14 sm:h-20 flex items-center justify-center">
+                    <span className="text-2xl sm:text-5xl font-black text-gray-800" style={{ fontFamily: 'Arial Black, sans-serif' }}>{digit}</span>
+                  </div>
+                ))}
               </div>
-              <span className="text-white text-sm sm:text-2xl font-black tracking-wider text-center leading-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>TOTAL<br/>DEPLOYED</span>
+              <span className="text-white text-sm sm:text-2xl font-black tracking-wider text-center leading-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                {isLoading ? 'LOADING...' : error ? 'ERROR' : 'TOTAL\nDEPLOYED'}
+              </span>
             </div>
           </div>
         </div>
