@@ -68,7 +68,7 @@ export default function App() {
     colorClass?: string;
   }) => (
     <div
-      className={`tracking-wider text-[11px] sm:text-xl font-black ${colorClass ?? "text-white"} text-center`}
+      className={`tracking-wider text-[11px] sm:text-4xl font-black ${colorClass ?? "text-white"} text-center`}
       style={{ fontFamily: "'Archivo Black', system-ui, sans-serif" }}
     >
       {children}
@@ -84,10 +84,10 @@ export default function App() {
       {digits(value).map((d, i) => (
         <div
           key={i}
-          className="w-12 h-16 sm:w-20 sm:h-28 rounded-md bg-white shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08)] grid place-items-center"
+          className="w-12 h-16 sm:w-24 sm:h-32 rounded-md bg-white shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08)] grid place-items-center"
         >
           <span
-            className="text-3xl sm:text-6xl leading-none text-zinc-800"
+            className="text-5xl sm:text-9xl leading-none text-zinc-800"
             style={{ fontFamily: "'Archivo Black', system-ui, sans-serif" }}
           >
             {d}
@@ -136,7 +136,7 @@ export default function App() {
 
 
         {/* Title */}
-        {/* <h2
+        <h2
           className="text-white text-center mb-2 sm:mb-3"
           style={{
             fontFamily: "'Archivo Black', system-ui, sans-serif",
@@ -145,7 +145,7 @@ export default function App() {
           }}
         >
           BALLS FOR BIRDIES
-        </h2> */}
+        </h2>
 
         {/* <p
           className="text-center text-white/95  mx-auto mb-8 sm:mb-12 px-2"
