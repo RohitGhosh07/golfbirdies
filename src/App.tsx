@@ -123,9 +123,9 @@ export default function App() {
         }}
       />
 
-      <div className="w-full max-w-[1120px]">
+      <div className="w-full max-w-[1120px] ">
         {/* DP World mark */}
-        <div className="flex justify-center ">
+        <div className="flex justify-center  ">
           <img
             src={logo1}
             alt="DP World Logo"
@@ -160,7 +160,7 @@ export default function App() {
         </p>
 
         {/* Divider */}
-        <div className="h-px w-full bg-white/25" />
+        {/* <div className="h-px w-full bg-white" /> */}
 
         {/* Count block */}
         <section className="py-8 sm:py-12">
@@ -205,8 +205,7 @@ export default function App() {
               <Tiles value={isLoading || error ? 0 : totalDeployed} />
               <div className="mt-2 sm:mt-4 leading-tight">
                 <Label>
-                  {isLoading ? "LOADING..." : error ? "ERROR" : "TOTAL"}
-                  <br />
+                  {isLoading ? "LOADING..." : error ? "ERROR" : "TOTAL "}
                   {isLoading || error ? "" : "DEPLOYED"}
                 </Label>
               </div>
@@ -214,23 +213,23 @@ export default function App() {
           </div>
         </section>
         {/* Divider */}
-        <div className="h-px w-full bg-white/15" />
+        {/* <div className="h-px w-full bg-white" /> */}
         {/* Bottom logos – ALWAYS 3 in a row */}
         <div className="grid grid-cols-3 gap-6 sm:gap-12 place-items-center">
           <img
             src={bottom}
             alt="DP World Tour"
-            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+            className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
           <img
             src={bottom1}
             alt="The Golf Foundation"
-            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+            className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
           <img
             src={bottom2}
             alt="Indian Golf Union"
-            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+            className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
         </div>
 
@@ -238,7 +237,7 @@ export default function App() {
         {/* Support copy */}
         <div className="text-center  px-2">
           <p
-            className="text-white/95 mb-4 sm:mb-6"
+            className="text-white/95 "
             style={{
               fontFamily: "Inter, system-ui, sans-serif",
               fontSize: "clamp(12px, 2.8vw, 18px)",
