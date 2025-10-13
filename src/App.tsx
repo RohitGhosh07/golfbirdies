@@ -76,18 +76,18 @@ export default function App() {
   );
 
   const Tiles = ({ value }: { value: number }) => (
-    <div className="flex items-center gap-1 sm:gap-2">
+    <div className="flex items-center gap-2 sm:gap-3">
       {/* left hinge */}
-      <div className="w-2 sm:w-3 h-10 sm:h-16 rounded bg-white/15 relative overflow-hidden">
+      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-white/15 relative overflow-hidden">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-white/25" />
       </div>
       {digits(value).map((d, i) => (
         <div
           key={i}
-          className="w-8 h-12 sm:w-14 sm:h-20 rounded-md bg-white shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08)] grid place-items-center"
+          className="w-12 h-16 sm:w-20 sm:h-28 rounded-md bg-white shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08)] grid place-items-center"
         >
           <span
-            className="text-2xl sm:text-5xl leading-none text-zinc-800"
+            className="text-3xl sm:text-6xl leading-none text-zinc-800"
             style={{ fontFamily: "'Archivo Black', system-ui, sans-serif" }}
           >
             {d}
@@ -95,7 +95,7 @@ export default function App() {
         </div>
       ))}
       {/* right hinge */}
-      <div className="w-2 sm:w-3 h-10 sm:h-16 rounded bg-white/15 relative overflow-hidden">
+      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-white/15 relative overflow-hidden">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-white/25" />
       </div>
     </div>
@@ -129,7 +129,7 @@ export default function App() {
           <img
             src={logo1}
             alt="DP World Logo"
-            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+            className="w-40 h-60 sm:w-80 sm:h-60 object-contain"
           />
         </div>
 
@@ -179,11 +179,11 @@ export default function App() {
             COUNT:
           </h3>
 
-          <div className="grid grid-cols-3 gap-2 sm:gap-10 max-w-[820px] mx-auto">
+          <div className="grid grid-cols-3 gap-4 sm:gap-16 max-w-[1200px] mx-auto">
             {/* Birdies */}
             <div className="flex flex-col items-center">
               <Tiles value={isLoading || error ? 0 : scores.birdies} />
-              <div className="mt-2 sm:mt-4">
+              <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-rose)]">
                   {isLoading ? "LOADING..." : error ? "ERROR" : "BIRDIES"}
                 </Label>
@@ -193,7 +193,7 @@ export default function App() {
             {/* Eagles */}
             <div className="flex flex-col items-center">
               <Tiles value={isLoading || error ? 0 : scores.eagles} />
-              <div className="mt-2 sm:mt-4">
+              <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-green)]">
                   {isLoading ? "LOADING..." : error ? "ERROR" : "EAGLES"}
                 </Label>
@@ -203,7 +203,7 @@ export default function App() {
             {/* Total Deployed */}
             <div className="flex flex-col items-center">
               <Tiles value={isLoading || error ? 0 : totalDeployed} />
-              <div className="mt-2 sm:mt-4 leading-tight">
+              <div className="mt-4 sm:mt-6 leading-tight">
                 <Label>
                   {isLoading ? "LOADING..." : error ? "ERROR" : "TOTAL "}
                   {isLoading || error ? "" : "DEPLOYED"}
