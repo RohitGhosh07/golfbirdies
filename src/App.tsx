@@ -125,9 +125,9 @@ export default function App() {
 
       <div className="w-full max-w-[1120px]">
         {/* DP World mark */}
-        <div className="flex justify-center mb-3 sm:mb-6">
-          <img 
-            src={logo1} 
+        <div className="flex justify-center ">
+          <img
+            src={logo1}
             alt="DP World Logo"
             className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
           />
@@ -148,7 +148,7 @@ export default function App() {
         </h2>
 
         <p
-          className="text-center text-white/95 max-w-[820px] mx-auto mb-8 sm:mb-12 px-2"
+          className="text-center text-white/95  mx-auto mb-8 sm:mb-12 px-2"
           style={{
             fontFamily: "Inter, system-ui, sans-serif",
             fontSize: "clamp(12px, 2.8vw, 18px)",
@@ -176,7 +176,6 @@ export default function App() {
             <br className="sm:hidden" />
             <span className="hidden sm:inline"> </span>
             INDIA CHAMPIONSHIP
-            <br />
             COUNT:
           </h3>
 
@@ -214,12 +213,30 @@ export default function App() {
             </div>
           </div>
         </section>
-
         {/* Divider */}
         <div className="h-px w-full bg-white/15" />
+        {/* Bottom logos – ALWAYS 3 in a row */}
+        <div className="grid grid-cols-3 gap-6 sm:gap-12 place-items-center">
+          <img
+            src={bottom}
+            alt="DP World Tour"
+            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+          />
+          <img
+            src={bottom1}
+            alt="The Golf Foundation"
+            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+          />
+          <img
+            src={bottom2}
+            alt="Indian Golf Union"
+            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
+          />
+        </div>
+
 
         {/* Support copy */}
-        <div className="text-center mt-6 sm:mt-8 px-2">
+        <div className="text-center  px-2">
           <p
             className="text-white/95 mb-4 sm:mb-6"
             style={{
@@ -242,24 +259,7 @@ export default function App() {
           </p>
         </div>
 
-        {/* Bottom logos – ALWAYS 3 in a row */}
-        <div className="grid grid-cols-3 gap-6 sm:gap-12 place-items-center mt-10 sm:mt-16">
-          <img 
-            src={bottom} 
-            alt="DP World Tour"
-            className="w-40 h-40 sm:w-24 sm:h-24 object-contain"
-          />
-          <img 
-            src={bottom1} 
-            alt="The Golf Foundation"
-            className="w-40 h-40 sm:w-24 sm:h-24 object-contain"
-          />
-          <img 
-            src={bottom2} 
-            alt="Indian Golf Union"
-            className="w-40 h-40 sm:w-24 sm:h-24 object-contain"
-          />
-        </div>
+
       </div>
     </div>
   );
