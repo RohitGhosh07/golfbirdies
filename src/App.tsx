@@ -102,7 +102,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center px-4 py-8 sm:py-12 relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center px-4 py-8 sm:py-1 relative overflow-hidden">
       {/* Fonts + precise color tokens */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;700&display=swap');
@@ -129,7 +129,7 @@ export default function App() {
           <img 
             src={logo1} 
             alt="DP World Logo"
-            className="w-40 h-40 sm:w-28 sm:h-16 object-contain"
+            className="w-40 h-40 sm:w-80 sm:h-80 object-contain"
           />
         </div>
 
