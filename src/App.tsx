@@ -136,7 +136,7 @@ export default function App() {
 
 
         {/* Title */}
-        <h2
+        {/* <h2
           className="text-white text-center mb-2 sm:mb-3"
           style={{
             fontFamily: "'Archivo Black', system-ui, sans-serif",
@@ -145,9 +145,9 @@ export default function App() {
           }}
         >
           BALLS FOR BIRDIES
-        </h2>
+        </h2> */}
 
-        <p
+        {/* <p
           className="text-center text-white/95  mx-auto mb-8 sm:mb-12 px-2"
           style={{
             fontFamily: "Inter, system-ui, sans-serif",
@@ -157,13 +157,13 @@ export default function App() {
         >
           DP World has pledged to donate golf balls, linked to the number of
           birdies and eagles shot on the DP World Tour.
-        </p>
+        </p> */}
 
         {/* Divider */}
         {/* <div className="h-px w-full bg-white" /> */}
 
         {/* Count block */}
-        <section className="py-8 sm:py-12">
+        <section className="">
           <h3
             className="text-center text-white mb-6 sm:mb-10 leading-tight"
             style={{
