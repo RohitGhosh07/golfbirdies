@@ -123,29 +123,29 @@ export default function App() {
         }}
       />
 
-      <div className="w-full max-w-[1120px] ">
-        {/* DP World mark */}
-        <div className="flex justify-center  ">
-          <img
-            src={logo1}
-            alt="DP World Logo"
-            className="w-40 h-60 sm:w-80 sm:h-60 object-contain"
-          />
+      <div className="w-full max-w-[1120px]">
+        <div className="flex flex-row items-center justify-center gap-4">
+          {/* DP World mark */}
+          <div className="flex-shrink-0">
+            <img
+              src={logo1}
+              alt="DP World Logo"
+              className="w-40 h-60 sm:w-80 sm:h-60 object-contain"
+            />
+          </div>
+
+          {/* Title */}
+          <h2
+            className="text-white mb-2 sm:mb-3"
+            style={{
+              fontFamily: "'Archivo Black', system-ui, sans-serif",
+              letterSpacing: "0.02em",
+              fontSize: "clamp(20px, 5.5vw, 48px)",
+            }}
+          >
+            BALLS FOR BIRDIES
+          </h2>
         </div>
-
-
-
-        {/* Title */}
-        <h2
-          className="text-white text-center mb-2 sm:mb-3"
-          style={{
-            fontFamily: "'Archivo Black', system-ui, sans-serif",
-            letterSpacing: "0.02em",
-            fontSize: "clamp(20px, 5.5vw, 48px)",
-          }}
-        >
-          BALLS FOR BIRDIES
-        </h2>
 
         {/* <p
           className="text-center text-white/95  mx-auto mb-8 sm:mb-12 px-2"
@@ -184,7 +184,7 @@ export default function App() {
             <div className="flex flex-col items-center">
               <Tiles value={isLoading || error ? 0 : scores.birdies} />
               <div className="mt-4 sm:mt-6">
-                <Label colorClass="text-[var(--dp-rose)]">
+                <Label colorClass="text-[var(--dp-rose)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
                   {isLoading ? "LOADING..." : error ? "ERROR" : "BIRDIES"}
                 </Label>
               </div>
@@ -194,7 +194,7 @@ export default function App() {
             <div className="flex flex-col items-center">
               <Tiles value={isLoading || error ? 0 : scores.eagles} />
               <div className="mt-4 sm:mt-6">
-                <Label colorClass="text-[var(--dp-green)]">
+                <Label colorClass="text-[var(--dp-green)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
                   {isLoading ? "LOADING..." : error ? "ERROR" : "EAGLES"}
                 </Label>
               </div>
