@@ -18,15 +18,20 @@ type Score = { birdies: number; eagles: number };
 
 export default function App() {
   const [searchParams] = useSearchParams();
-  const eventId = searchParams.get("event") || "2025134";
-  const roundId = searchParams.get("round") || "1";
+  const eventId = searchParams.get("event");
+  const roundId = searchParams.get("round");
+  const eagleParam = searchParams.get("ea");
+  const birdieParam = searchParams.get("bi");
+  
   const [scores, setScores] = useState<Score>({ birdies: 0, eagles: 0 });
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
+    // Function to fetch API data
+    const fetchApiData = async () => {
       try {
+        if (!eventId || !roundId) return null;
+        
         const res = await fetch(
           `https://www.europeantour.com/api/sportdata/HoleByHole/Event/${eventId}/Round/${roundId}`
         );
@@ -43,14 +48,56 @@ export default function App() {
           });
         });
 
-        setScores({ birdies: birdie, eagles: eagle });
+        return { birdies: birdie, eagles: eagle };
       } catch {
         setError("Failed to fetch scores");
-      } finally {
-        setIsLoading(false);
+        return null;
       }
-    })();
-  }, []);
+    };
+
+    // Function to update scores based on parameters and API data
+    const updateScores = async () => {
+      // Parse ea and bi parameters
+      const eagleValue = eagleParam ? parseInt(eagleParam, 10) : 0;
+      const birdieValue = birdieParam ? parseInt(birdieParam, 10) : 0;
+
+      // Case 1: Only ea/bi parameters provided
+      if (eagleParam !== null && birdieParam !== null && !eventId && !roundId) {
+        setScores({ eagles: eagleValue, birdies: birdieValue });
+        return;
+      }
+
+      // Case 2: Fetch API data (with or without ea/bi parameters)
+      const apiData = await fetchApiData();
+      
+      if (apiData) {
+        // If ea/bi parameters exist, add them to API values
+        setScores({
+          eagles: (eagleParam !== null ? eagleValue : 0) + apiData.eagles,
+          birdies: (birdieParam !== null ? birdieValue : 0) + apiData.birdies
+        });
+      } else if (eagleParam !== null && birdieParam !== null) {
+        // Fallback to ea/bi parameters if API fetch fails
+        setScores({ eagles: eagleValue, birdies: birdieValue });
+      }
+    };
+
+    // Initial update
+    updateScores();
+
+    // Set up polling if API fetch is needed
+    let interval: NodeJS.Timeout | null = null;
+    if (eventId && roundId) {
+      interval = setInterval(updateScores, 1000);
+    }
+
+    // Cleanup
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [eventId, roundId, eagleParam, birdieParam]);
 
   const totalDeployed = useMemo(
     () => scores.birdies + scores.eagles * 2,
@@ -182,31 +229,31 @@ export default function App() {
           <div className="grid grid-cols-3 gap-4 sm:gap-16 max-w-[1200px] mx-auto">
             {/* Birdies */}
             <div className="flex flex-col items-center">
-              <Tiles value={isLoading || error ? 0 : scores.birdies} />
+              <Tiles value={error ? 0 : scores.birdies} />
               <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-rose)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
-                  {isLoading ? "LOADING..." : error ? "ERROR" : "BIRDIES"}
+                  {error ? "ERROR" : "BIRDIES"}
                 </Label>
               </div>
             </div>
 
             {/* Eagles */}
             <div className="flex flex-col items-center">
-              <Tiles value={isLoading || error ? 0 : scores.eagles} />
+              <Tiles value={error ? 0 : scores.eagles} />
               <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-green)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
-                  {isLoading ? "LOADING..." : error ? "ERROR" : "EAGLES"}
+                  {error ? "ERROR" : "EAGLES"}
                 </Label>
               </div>
             </div>
 
             {/* Total Deployed */}
             <div className="flex flex-col items-center">
-              <Tiles value={isLoading || error ? 0 : totalDeployed} />
+              <Tiles value={error ? 0 : totalDeployed} />
               <div className="mt-4 sm:mt-6 leading-tight">
                 <Label>
-                  {isLoading ? "LOADING..." : error ? "ERROR" : "TOTAL "}
-                  {isLoading || error ? "" : "DEPLOYED"}
+                  {error ? "ERROR" : "TOTAL "}
+                  {error ? "" : "DEPLOYED"}
                 </Label>
               </div>
             </div>
