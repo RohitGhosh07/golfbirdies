@@ -88,7 +88,7 @@ export default function App() {
     // Set up polling if API fetch is needed
     let interval: NodeJS.Timeout | null = null;
     if (eventId && roundId) {
-      interval = setInterval(updateScores, 1000);
+      interval = setInterval(updateScores, 60000);
     }
 
     // Cleanup
