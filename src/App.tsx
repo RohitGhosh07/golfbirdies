@@ -2,9 +2,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import logo1 from "./assets/logo1.png";
-import bottom from "./assets/bottom.png";
-import bottom1 from "./assets/bottom1.png";
-import bottom2 from "./assets/bottom2.png";
+import DP_World_tour from "./assets/DP World tour.png";
+import indian_golf_union from "./assets/indian golf union.png";
+import tgf from "./assets/tgf.png";
 
 /**
  * Exact-look replica of the DP WORLD poster:
@@ -125,7 +125,7 @@ export default function App() {
   const Tiles = ({ value }: { value: number }) => (
     <div className="flex items-center gap-2 sm:gap-3">
       {/* left hinge */}
-      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-white/15 relative overflow-hidden">
+      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-orange-600 relative overflow-hidden">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-white/25" />
       </div>
       {digits(value).map((d, i) => (
@@ -142,7 +142,7 @@ export default function App() {
         </div>
       ))}
       {/* right hinge */}
-      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-white/15 relative overflow-hidden">
+      <div className="w-3 sm:w-4 h-14 sm:h-24 rounded bg-orange-600 relative overflow-hidden">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-white/25" />
       </div>
     </div>
@@ -156,7 +156,7 @@ export default function App() {
         :root{
           --dp-start:#6F79D5;   /* top blue-violet */
           --dp-end:#1E0A36;     /* deep purple bottom */
-          --dp-rose:#FF4466;    /* BIRDIES label */
+          --dp-rose:#FFEA00;    /* BIRDIES label */
           --dp-green:#22C56D;   /* EAGLES label */
         }
       `}</style>
@@ -173,13 +173,13 @@ export default function App() {
       <div className="w-full max-w-[1120px]">
         <div className="flex flex-row items-center justify-center gap-4">
           {/* DP World mark */}
-          <div className="flex-shrink-0">
+          {/* <div className="flex-shrink-0">
             <img
               src={logo1}
               alt="DP World Logo"
               className="w-40 h-60 sm:w-80 sm:h-60 object-contain"
             />
-          </div>
+          </div> */}
 
           {/* Title */}
           <h2
@@ -264,17 +264,17 @@ export default function App() {
         {/* Bottom logos – ALWAYS 3 in a row */}
         <div className="grid grid-cols-3 gap-6 sm:gap-12 place-items-center">
           <img
-            src={bottom}
+            src={DP_World_tour}
             alt="DP World Tour"
             className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
           <img
-            src={bottom1}
+            src={tgf}
             alt="The Golf Foundation"
-            className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
+            className="w-100 h-40 sm:w-100 sm:h-60 object-contain"
           />
           <img
-            src={bottom2}
+            src={indian_golf_union}
             alt="Indian Golf Union"
             className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
