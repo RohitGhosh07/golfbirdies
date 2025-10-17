@@ -24,7 +24,6 @@ export default function App() {
   const birdieParam = searchParams.get("bi");
   
   const [scores, setScores] = useState<Score>({ birdies: 0, eagles: 0 });
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Function to fetch API data
@@ -50,7 +49,7 @@ export default function App() {
 
         return { birdies: birdie, eagles: eagle };
       } catch {
-        setError("Failed to fetch scores");
+        // Silently handle error and keep previous data
         return null;
       }
     };
@@ -229,31 +228,30 @@ export default function App() {
           <div className="grid grid-cols-3 gap-4 sm:gap-16 max-w-[1200px] mx-auto">
             {/* Birdies */}
             <div className="flex flex-col items-center">
-              <Tiles value={error ? 0 : scores.birdies} />
+              <Tiles value={scores.birdies} />
               <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-rose)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
-                  {error ? "ERROR" : "BIRDIES"}
+                  BIRDIES
                 </Label>
               </div>
             </div>
 
             {/* Eagles */}
             <div className="flex flex-col items-center">
-              <Tiles value={error ? 0 : scores.eagles} />
+              <Tiles value={scores.eagles} />
               <div className="mt-4 sm:mt-6">
                 <Label colorClass="text-[var(--dp-green)] [text-shadow:_0_0_10px_rgba(0,0,0,0)]">
-                  {error ? "ERROR" : "EAGLES"}
+                  EAGLES
                 </Label>
               </div>
             </div>
 
             {/* Total Deployed */}
             <div className="flex flex-col items-center">
-              <Tiles value={error ? 0 : totalDeployed} />
+              <Tiles value={totalDeployed} />
               <div className="mt-4 sm:mt-6 leading-tight">
                 <Label>
-                  {error ? "ERROR" : "TOTAL "}
-                  {error ? "" : "DEPLOYED"}
+                  TOTAL DEPLOYED
                 </Label>
               </div>
             </div>
