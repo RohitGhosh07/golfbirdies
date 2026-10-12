@@ -66,19 +66,22 @@ When `event` and `round` are present, the app fetches:
 https://www.europeantour.com/api/sportdata/HoleByHole/Event/{event}/Round/{round}
 ```
 
-If `ea` / `bi` are also set, those values are **added** to the API totals. Polling runs every minute.
+If `ea` and/or `bi` are also set, those values are **added** to the API totals after the count. You can pass one or both. Polling runs every minute.
+
+Example: API returns 40 birdies and 3 eagles, URL is `?event=...&round=1&bi=5&ea=2` → display is **45 birdies**, **5 eagles**, **55 total deployed**.
 
 ### Manual counts only (no API)
 
 ```
 /dpworldtour/?ea=12&bi=48
+/dpworldtour/?bi=10
 ```
 
-Use this for testing or when live data is unavailable. Both `ea` and `bi` should be provided.
+Use this for testing or when live data is unavailable. Either param can be used on its own.
 
 ### Fallback
 
-If the API request fails and `ea` / `bi` are present, the display uses those values instead of going blank.
+If the API request fails, the last successful API count is kept (when available) and the extra `ea` / `bi` numbers are still added. If there is no API count yet, the display shows the extra numbers only.
 
 ## Display logic
 

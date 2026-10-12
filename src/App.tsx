@@ -1,10 +1,16 @@
 // App.tsx
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import logo1 from "./assets/logo1.png";
 import DP_World_tour from "./assets/DP World tour.png";
 import indian_golf_union from "./assets/indian golf union.png";
 import tgf from "./assets/tgf.png";
+
+const parseCount = (value: string | null) => {
+  if (value === null || value === "") return 0;
+  const n = parseInt(value, 10);
+  return Number.isFinite(n) ? n : 0;
+};
 
 /**
  * Exact-look replica of the DP WORLD poster:
@@ -24,73 +30,68 @@ export default function App() {
   const birdieParam = searchParams.get("bi");
   
   const [scores, setScores] = useState<Score>({ birdies: 0, eagles: 0 });
+  const lastApiScores = useRef<Score | null>(null);
 
   useEffect(() => {
-    // Function to fetch API data
-    const fetchApiData = async () => {
+    const extraBirdies = parseCount(birdieParam);
+    const extraEagles = parseCount(eagleParam);
+
+    const applyScores = (api: Score | null) => {
+      setScores({
+        birdies: (api?.birdies ?? 0) + extraBirdies,
+        eagles: (api?.eagles ?? 0) + extraEagles,
+      });
+    };
+
+    const fetchApiData = async (): Promise<Score | null> => {
       try {
         if (!eventId || !roundId) return null;
-        
+
         const res = await fetch(
           `https://www.europeantour.com/api/sportdata/HoleByHole/Event/${eventId}/Round/${roundId}`
         );
         const data = await res.json();
 
-        let birdie = 0;
-        let eagle = 0;
+        let birdies = 0;
+        let eagles = 0;
 
-        // Count across all players/holes
         data?.Players?.forEach((p: any) => {
           p?.Holes?.forEach((h: any) => {
-            if (h?.ScoreClass === "bi") birdie++;
-            if (h?.ScoreClass === "ea") eagle++;
+            if (h?.ScoreClass === "bi") birdies++;
+            if (h?.ScoreClass === "ea") eagles++;
           });
         });
 
-        return { birdies: birdie, eagles: eagle };
+        return { birdies, eagles };
       } catch {
-        // Silently handle error and keep previous data
         return null;
       }
     };
 
-    // Function to update scores based on parameters and API data
     const updateScores = async () => {
-      // Parse ea and bi parameters
-      const eagleValue = eagleParam ? parseInt(eagleParam, 10) : 0;
-      const birdieValue = birdieParam ? parseInt(birdieParam, 10) : 0;
-
-      // Case 1: Only ea/bi parameters provided
-      if (eagleParam !== null && birdieParam !== null && !eventId && !roundId) {
-        setScores({ eagles: eagleValue, birdies: birdieValue });
+      // No live event: show the extra bi/ea numbers only
+      if (!eventId || !roundId) {
+        lastApiScores.current = null;
+        applyScores(null);
         return;
       }
 
-      // Case 2: Fetch API data (with or without ea/bi parameters)
       const apiData = await fetchApiData();
-      
       if (apiData) {
-        // If ea/bi parameters exist, add them to API values
-        setScores({
-          eagles: (eagleParam !== null ? eagleValue : 0) + apiData.eagles,
-          birdies: (birdieParam !== null ? birdieValue : 0) + apiData.birdies
-        });
-      } else if (eagleParam !== null && birdieParam !== null) {
-        // Fallback to ea/bi parameters if API fetch fails
-        setScores({ eagles: eagleValue, birdies: birdieValue });
+        lastApiScores.current = apiData;
       }
+
+      // Display = API count + extra numbers from the URL
+      applyScores(lastApiScores.current);
     };
 
-    // Initial update
     updateScores();
 
-    // Set up polling if API fetch is needed
-    let interval: NodeJS.Timeout | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (eventId && roundId) {
       interval = setInterval(updateScores, 60000);
     }
 
-    // Cleanup
     return () => {
       if (interval) {
         clearInterval(interval);
