@@ -1,10 +1,10 @@
 // App.tsx
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import logo1 from "./assets/logo1.png";
 import DP_World_tour from "./assets/DP World tour.png";
-import indian_golf_union from "./assets/indian golf union.png";
 import tgf from "./assets/tgf.png";
+
+const DEFAULT_EVENT_ID = "2026140";
 
 const parseCount = (value: string | null) => {
   if (value === null || value === "") return 0;
@@ -16,7 +16,7 @@ const parseCount = (value: string | null) => {
  * Exact-look replica of the DP WORLD poster:
  * - Gradient, spacing, and type scale tuned to match the artwork
  * - Number tiles with hinge ticks
- * - Mobile-first; bottom logos always 3-in-a-row
+ * - Mobile-first; bottom logos in a centered row
  * - Uses Google fonts (Archivo Black + Inter) injected locally via <style>
  */
 
@@ -24,7 +24,7 @@ type Score = { birdies: number; eagles: number };
 
 export default function App() {
   const [searchParams] = useSearchParams();
-  const eventId = searchParams.get("event");
+  const eventId = searchParams.get("event") || DEFAULT_EVENT_ID;
   const roundId = searchParams.get("round");
   const eagleParam = searchParams.get("ea");
   const birdieParam = searchParams.get("bi");
@@ -260,8 +260,8 @@ export default function App() {
         </section>
         {/* Divider */}
         {/* <div className="h-px w-full bg-white" /> */}
-        {/* Bottom logos – ALWAYS 3 in a row */}
-        <div className="grid grid-cols-3 gap-6 sm:gap-12 place-items-center">
+        {/* Bottom logos – 2 centered */}
+        <div className="flex items-center justify-center gap-6 sm:gap-12">
           <img
             src={DP_World_tour}
             alt="DP World Tour"
@@ -270,11 +270,6 @@ export default function App() {
           <img
             src={tgf}
             alt="The Golf Foundation"
-            className="w-100 h-40 sm:w-100 sm:h-60 object-contain"
-          />
-          <img
-            src={indian_golf_union}
-            alt="Indian Golf Union"
             className="w-40 h-40 sm:w-80 sm:h-60 object-contain"
           />
         </div>
