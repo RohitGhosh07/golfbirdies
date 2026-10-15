@@ -5,6 +5,7 @@ import DP_World_tour from "./assets/DP World tour.png";
 import tgf from "./assets/tgf.png";
 
 const DEFAULT_EVENT_ID = "2026140";
+const DEFAULT_ROUND_ID = "1";
 
 const parseCount = (value: string | null) => {
   if (value === null || value === "") return 0;
@@ -25,7 +26,7 @@ type Score = { birdies: number; eagles: number };
 export default function App() {
   const [searchParams] = useSearchParams();
   const eventId = searchParams.get("event") || DEFAULT_EVENT_ID;
-  const roundId = searchParams.get("round");
+  const roundId = searchParams.get("round") || DEFAULT_ROUND_ID;
   const eagleParam = searchParams.get("ea");
   const birdieParam = searchParams.get("bi");
   
